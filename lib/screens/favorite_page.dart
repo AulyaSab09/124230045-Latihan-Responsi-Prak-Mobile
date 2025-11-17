@@ -165,7 +165,6 @@ class _FavoritePageState extends State<FavoritePage> {
                             ),
                           ),
 
-                          // Love Button (selalu filled)
                           IconButton(
                             icon: const Icon(Icons.favorite,
                                 color: Color(0xFFEE6983), size: 28),
