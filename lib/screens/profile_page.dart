@@ -6,7 +6,7 @@ import 'package:tugasakhir_124230045/screens/auth/login_page.dart';
 import 'package:tugasakhir_124230045/services/session_service.dart';
 
 class ProfilePage extends StatelessWidget {
-  final String username;      // username yang sedang login
+  final String username;      
   final UserRepository repo;
 
   const ProfilePage({
@@ -16,7 +16,7 @@ class ProfilePage extends StatelessWidget {
   });
 
   Future<void> logout(BuildContext context) async {
-    await SessionService.logout(); // ✅ hapus session login
+    await SessionService.logout(); 
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (_) => LoginPage(repo: repo)),
@@ -29,8 +29,8 @@ class ProfilePage extends StatelessWidget {
     final UserModel? user = repo.getUser(username);
 
     // data nama & NIM asli kamu (hardcode)
-    const String namaLengkap = "Sabrina Nurul Aulya"; // ganti dengan nama kamu
-    const String nim = "124230045";                 // ganti kalau beda
+    const String namaLengkap = "Sabrina Nurul Aulya"; 
+    const String nim = "124230045";                
 
     return Scaffold(
       backgroundColor: const Color(0xFFFCF5EE),
