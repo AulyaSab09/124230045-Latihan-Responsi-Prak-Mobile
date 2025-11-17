@@ -93,7 +93,7 @@ class _AnimeDetailPageState extends State<AnimeDetailPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // ================== CARD ATAS ==================
+            
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
@@ -190,7 +190,7 @@ class _AnimeDetailPageState extends State<AnimeDetailPage> {
                         SizedBox(
                           width: double.infinity,
                           child: ElevatedButton(
-                            onPressed: _openAnimePage,        // ✅ pakai fungsi baru
+                            onPressed: _openAnimePage,        
                             style: ElevatedButton.styleFrom(
                               backgroundColor: const Color(0xFFEE6983),
                               shape: RoundedRectangleBorder(
@@ -199,7 +199,7 @@ class _AnimeDetailPageState extends State<AnimeDetailPage> {
                               padding: const EdgeInsets.symmetric(vertical: 10),
                             ),
                             child: const Text(
-                              "Lihat di MyAnimeList",        // ✅ teks baru (bebas kamu ganti)
+                              "Lihat di MyAnimeList",        
                               style: TextStyle(
                                 fontSize: 14,
                                 color: Colors.white,
@@ -217,7 +217,6 @@ class _AnimeDetailPageState extends State<AnimeDetailPage> {
 
             const SizedBox(height: 20),
 
-            // ================== DESCRIPTION ==================
             const Text(
               "Description",
               style: TextStyle(
@@ -243,7 +242,6 @@ class _AnimeDetailPageState extends State<AnimeDetailPage> {
 
             const SizedBox(height: 20),
 
-            // ================== GENRES ==================
             if (anime.genres.isNotEmpty) ...[
               const Text(
                 "Genres",
