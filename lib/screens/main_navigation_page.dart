@@ -3,8 +3,8 @@ import 'package:tugasakhir_124230045/repositories/user_repository.dart';
 import 'package:tugasakhir_124230045/screens/favorite_page.dart';
 import 'package:tugasakhir_124230045/screens/home_page.dart';
 import 'package:tugasakhir_124230045/screens/profile_page.dart';
-import 'package:tugasakhir_124230045/services/session_service.dart'; // Import SessionService untuk pengecekan session
-import 'package:tugasakhir_124230045/screens/auth/login_page.dart';  // Import halaman login
+import 'package:tugasakhir_124230045/services/session_service.dart'; 
+import 'package:tugasakhir_124230045/screens/auth/login_page.dart';  
 
 class MainNavigationPage extends StatefulWidget {
   final String username;
