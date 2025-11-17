@@ -191,7 +191,6 @@ class _AnimeHomePageState extends State<AnimeHomePage> {
     );
   }
 
-  // ================== CARD ==================
   Widget _animeCard(AnimeModel anime) {
     return FutureBuilder(
       future: FavoriteService.isFavorite(anime.title),
