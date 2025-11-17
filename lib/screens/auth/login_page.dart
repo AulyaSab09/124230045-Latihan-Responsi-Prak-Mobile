@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:tugasakhir_124230045/repositories/user_repository.dart';
-import 'package:tugasakhir_124230045/screens/auth/register_page.dart';
-import 'package:tugasakhir_124230045/screens/main_navigation_page.dart';
+import 'package:tugasakhir_124230045/services/session_service.dart';  // Import session service
+import 'package:tugasakhir_124230045/screens/main_navigation_page.dart';  // Halaman utama setelah login
+import 'package:tugasakhir_124230045/screens/auth/register_page.dart';  // Halaman register
 
 class LoginPage extends StatefulWidget {
   final UserRepository repo;
@@ -16,81 +17,74 @@ class _LoginPageState extends State<LoginPage> {
   String password = "";
   bool showPassword = false;
 
-  void _login() {
+  Future<void> _login() async {
     bool success = widget.repo.checkLogin(username, password);
 
     if (!success) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Login gagal! Username atau password salah.")),
+        const SnackBar(
+          content: Text("Login gagal! Username atau password salah."),
+        ),
       );
       return;
     }
 
+    // ✅ Simpan session login
+    await SessionService.saveLogin(username);
+
+    // Arahkan ke halaman utama setelah login
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (_) => MainNavigationPage(
-          username: username,
-          repo: widget.repo,
-        ),
+        builder: (_) => MainNavigationPage(username: username, repo: widget.repo),
       ),
     );
-
-
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFFCF5EE),
-
       appBar: AppBar(
-        title: const Text("MakanIN",
-            style: TextStyle(fontWeight: FontWeight.bold)),
+        title: const Text(
+          "Anichive",
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
         centerTitle: true,
         backgroundColor: const Color(0xFF850E35),
         elevation: 0,
       ),
-
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const SizedBox(height: 20),
-
+            // Logo
             CircleAvatar(
               radius: 70,
               backgroundColor: const Color(0xFFFFC4C4),
-              child: const Text(
-                "Logo",
-                style: TextStyle(fontSize: 20, color: Color(0xFF850E35)),
-              ),
+              backgroundImage: const AssetImage("assets/images/logo.png"),
             ),
-
             const SizedBox(height: 25),
-
             const Text(
               "Login",
               style: TextStyle(
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xFF850E35)),
+                fontSize: 28,
+                fontWeight: FontWeight.bold,
+                color: Color(0xFF850E35),
+              ),
             ),
-
             const SizedBox(height: 5),
-
             const Text(
               "Login untuk mengakses lebih banyak fitur",
               style: TextStyle(fontSize: 14, color: Colors.black54),
             ),
-
             const SizedBox(height: 25),
-
+            // Username Field
             TextField(
               decoration: InputDecoration(
-                prefixIcon:
-                    const Icon(Icons.person, color: Color(0xFF850E35)),
+                prefixIcon: const Icon(Icons.person, color: Color(0xFF850E35)),
                 labelText: "Username",
                 filled: true,
                 fillColor: const Color(0xFFFFC4C4),
@@ -100,22 +94,18 @@ class _LoginPageState extends State<LoginPage> {
               ),
               onChanged: (v) => username = v,
             ),
-
             const SizedBox(height: 15),
-
+            // Password Field
             TextField(
               obscureText: !showPassword,
               decoration: InputDecoration(
-                prefixIcon:
-                    const Icon(Icons.lock, color: Color(0xFF850E35)),
+                prefixIcon: const Icon(Icons.lock, color: Color(0xFF850E35)),
                 labelText: "Password",
                 filled: true,
                 fillColor: const Color(0xFFFFC4C4),
                 suffixIcon: IconButton(
                   icon: Icon(
-                    showPassword
-                        ? Icons.visibility
-                        : Icons.visibility_off,
+                    showPassword ? Icons.visibility : Icons.visibility_off,
                     color: const Color(0xFF850E35),
                   ),
                   onPressed: () {
@@ -128,9 +118,8 @@ class _LoginPageState extends State<LoginPage> {
               ),
               onChanged: (v) => password = v,
             ),
-
             const SizedBox(height: 30),
-
+            // Login Button
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
@@ -142,13 +131,11 @@ class _LoginPageState extends State<LoginPage> {
                     borderRadius: BorderRadius.circular(14),
                   ),
                 ),
-                child: const Text("Login",
-                    style: TextStyle(fontSize: 18)),
+                child: const Text("Login", style: TextStyle(fontSize: 18)),
               ),
             ),
-
             const SizedBox(height: 10),
-
+            // Register Link
             GestureDetector(
               onTap: () {
                 Navigator.push(
@@ -161,8 +148,9 @@ class _LoginPageState extends State<LoginPage> {
               child: const Text(
                 "Belum punya akun? Register",
                 style: TextStyle(
-                    color: Color(0xFF850E35),
-                    fontWeight: FontWeight.bold),
+                  color: Color(0xFF850E35),
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
             const SizedBox(height: 30),

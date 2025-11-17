@@ -21,11 +21,10 @@ class _RegisterPageState extends State<RegisterPage> {
 
   final picker = ImagePicker();
 
-  /// BottomSheet untuk milih Kamera / Galeri
   Future<void> pickImage() async {
     showModalBottomSheet(
       context: context,
-      shape: RoundedRectangleBorder(
+      shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
       builder: (_) {
@@ -33,8 +32,8 @@ class _RegisterPageState extends State<RegisterPage> {
           child: Wrap(
             children: [
               ListTile(
-                leading: Icon(Icons.camera_alt, color: Color(0xFF850E35)),
-                title: Text("Ambil dari Kamera"),
+                leading: const Icon(Icons.camera_alt, color: Color(0xFF850E35)),
+                title: const Text("Ambil dari Kamera"),
                 onTap: () async {
                   Navigator.pop(context);
                   final picked =
@@ -45,9 +44,8 @@ class _RegisterPageState extends State<RegisterPage> {
                 },
               ),
               ListTile(
-                leading:
-                    Icon(Icons.photo_library, color: Color(0xFF850E35)),
-                title: Text("Pilih dari Galeri"),
+                leading: const Icon(Icons.photo_library, color: Color(0xFF850E35)),
+                title: const Text("Pilih dari Galeri"),
                 onTap: () async {
                   Navigator.pop(context);
                   final picked =
@@ -64,19 +62,24 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
-  void _register() async {
+  Future<void> _register() async {
     if (username.isEmpty || password.isEmpty || imageFile == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Isi semua field & upload foto!")),
+        const SnackBar(content: Text("Isi semua field & upload foto!")),
       );
       return;
     }
 
-    final user = UserModel(username: username, password: password);
+    final user = UserModel(
+      username: username,
+      password: password,
+      photoPath: imageFile!.path, // ✅ simpan path foto ke Hive
+    );
+
     await widget.repo.addUser(user);
 
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text("Register berhasil! Silakan login.")),
+      const SnackBar(content: Text("Register berhasil! Silakan login.")),
     );
 
     Navigator.pushReplacement(
@@ -88,48 +91,44 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFFCF5EE),
-
-      /// AppBar tanpa panah
+      backgroundColor: const Color(0xFFFCF5EE),
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: Text(
+        title: const Text(
           "Register Akun",
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
-        backgroundColor: Color(0xFF850E35),
+        backgroundColor: const Color(0xFF850E35),
       ),
-
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(20),
+        padding: const EdgeInsets.all(20),
         child: Column(
           children: [
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
 
             GestureDetector(
               onTap: pickImage,
               child: CircleAvatar(
                 radius: 65,
-                backgroundColor: Color(0xFFFFC4C4),
+                backgroundColor: const Color(0xFFFFC4C4),
                 backgroundImage:
                     imageFile != null ? FileImage(imageFile!) : null,
                 child: imageFile == null
-                    ? Icon(Icons.camera_alt,
+                    ? const Icon(Icons.camera_alt,
                         size: 40, color: Color(0xFF850E35))
                     : null,
               ),
             ),
 
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
 
-            /// USERNAME FIELD
             TextField(
               decoration: InputDecoration(
-                prefixIcon: Icon(Icons.person, color: Color(0xFF850E35)),
+                prefixIcon: const Icon(Icons.person, color: Color(0xFF850E35)),
                 labelText: "Username",
                 filled: true,
-                fillColor: Color(0xFFFFC4C4),
+                fillColor: const Color(0xFFFFC4C4),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(14),
                 ),
@@ -137,22 +136,21 @@ class _RegisterPageState extends State<RegisterPage> {
               onChanged: (v) => username = v,
             ),
 
-            SizedBox(height: 15),
+            const SizedBox(height: 15),
 
-            /// PASSWORD FIELD
             TextField(
               obscureText: !showPassword,
               decoration: InputDecoration(
-                prefixIcon: Icon(Icons.lock, color: Color(0xFF850E35)),
+                prefixIcon: const Icon(Icons.lock, color: Color(0xFF850E35)),
                 labelText: "Password",
                 filled: true,
-                fillColor: Color(0xFFFFC4C4),
+                fillColor: const Color(0xFFFFC4C4),
                 suffixIcon: IconButton(
                   icon: Icon(
                     showPassword
                         ? Icons.visibility
                         : Icons.visibility_off,
-                    color: Color(0xFF850E35),
+                    color: const Color(0xFF850E35),
                   ),
                   onPressed: () =>
                       setState(() => showPassword = !showPassword),
@@ -164,27 +162,25 @@ class _RegisterPageState extends State<RegisterPage> {
               onChanged: (v) => password = v,
             ),
 
-            SizedBox(height: 30),
+            const SizedBox(height: 30),
 
-            /// BUTTON REGISTER
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: _register,
                 style: ElevatedButton.styleFrom(
-                  padding: EdgeInsets.symmetric(vertical: 14),
-                  backgroundColor: Color(0xFFEE6983),
+                  padding: const EdgeInsets.symmetric(vertical: 14),
+                  backgroundColor: const Color(0xFFEE6983),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(14),
                   ),
                 ),
-                child: Text("Register", style: TextStyle(fontSize: 18)),
+                child: const Text("Register", style: TextStyle(fontSize: 18)),
               ),
             ),
 
-            SizedBox(height: 15),
+            const SizedBox(height: 15),
 
-            /// LINK LOGIN
             GestureDetector(
               onTap: () {
                 Navigator.pushReplacement(
@@ -194,7 +190,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                 );
               },
-              child: Text(
+              child: const Text(
                 "Sudah punya akun? Login",
                 style: TextStyle(
                   color: Color(0xFF850E35),
@@ -204,7 +200,7 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
             ),
 
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
           ],
         ),
       ),

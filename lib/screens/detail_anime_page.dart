@@ -53,24 +53,29 @@ class _AnimeDetailPageState extends State<AnimeDetailPage> {
       widget.onFavoriteChanged();
   }
 
-  Future<void> _openTrailer() async {
-    final urlString = widget.anime.trailerUrl;
-    if (urlString.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Trailer tidak tersedia.")),
-      );
-      return;
-    }
+  Future<void> _openAnimePage() async {
+  final urlString = widget.anime.url;   // ambil URL anime
+  print("URL yang akan dibuka: $urlString");  // Debugging: lihat URL-nya
 
-    final uri = Uri.parse(urlString);
-    if (await canLaunchUrl(uri)) {
-      await launchUrl(uri, mode: LaunchMode.externalApplication);
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Gagal membuka trailer.")),
-      );
-    }
+  if (urlString.isEmpty) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text("Link anime tidak tersedia.")),
+    );
+    return;
   }
+
+  final uri = Uri.parse(urlString);  // pastikan URL-nya valid
+
+  // Gunakan canLaunchUrl dan launchUrl (Metode terbaru)
+  if (await canLaunchUrl(uri)) {
+    await launchUrl(uri, mode: LaunchMode.externalApplication);  // buka di aplikasi browser
+  } else {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text("Gagal membuka halaman anime.")),
+    );
+  }
+}
+
 
   @override
   Widget build(BuildContext context) {
@@ -185,17 +190,16 @@ class _AnimeDetailPageState extends State<AnimeDetailPage> {
                         SizedBox(
                           width: double.infinity,
                           child: ElevatedButton(
-                            onPressed: _openTrailer,
+                            onPressed: _openAnimePage,        // ✅ pakai fungsi baru
                             style: ElevatedButton.styleFrom(
                               backgroundColor: const Color(0xFFEE6983),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20),
                               ),
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 10),
+                              padding: const EdgeInsets.symmetric(vertical: 10),
                             ),
                             child: const Text(
-                              "Watch Trailer",
+                              "Lihat di MyAnimeList",        // ✅ teks baru (bebas kamu ganti)
                               style: TextStyle(
                                 fontSize: 14,
                                 color: Colors.white,
@@ -203,6 +207,7 @@ class _AnimeDetailPageState extends State<AnimeDetailPage> {
                             ),
                           ),
                         ),
+
                       ],
                     ),
                   ),

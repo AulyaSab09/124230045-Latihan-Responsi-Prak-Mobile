@@ -78,7 +78,7 @@ class _FavoritePageState extends State<FavoritePage> {
               if (favoriteAnime.isEmpty) {
                 return const Center(
                   child: Text(
-                    "Belum ada anime favorit 🥲",
+                    "Belum ada anime favorit",
                     style: TextStyle(
                         color: Color(0xFF850E35),
                         fontWeight: FontWeight.bold,

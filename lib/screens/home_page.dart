@@ -1,6 +1,4 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:tugasakhir_124230045/models/anime_model.dart';
 import 'package:tugasakhir_124230045/screens/detail_anime_page.dart';
 import 'package:tugasakhir_124230045/services/anime_service.dart';
@@ -30,20 +28,12 @@ class _AnimeHomePageState extends State<AnimeHomePage> {
   final AnimeService animeService = AnimeService();
   late Future<List<AnimeModel>> animes;
 
-  File? logoFile;
   String searchText = "";
 
   @override
   void initState() {
     super.initState();
     animes = animeService.fetchAnime();
-  }
-
-  Future<void> pickLogo() async {
-    final picked = await ImagePicker().pickImage(source: ImageSource.gallery);
-    if (picked != null) {
-      setState(() => logoFile = File(picked.path));
-    }
   }
 
   Future<void> logout() async {
@@ -67,22 +57,15 @@ class _AnimeHomePageState extends State<AnimeHomePage> {
         automaticallyImplyLeading: false,
         title: Row(
           children: [
-            GestureDetector(
-              onTap: pickLogo,
-              child: CircleAvatar(
-                radius: 20,
-                backgroundImage:
-                    logoFile != null ? FileImage(logoFile!) : null,
-                backgroundColor: const Color(0xFFFFC4C4),
-                child: logoFile == null
-                    ? const Icon(Icons.add_photo_alternate,
-                        color: Color(0xFF850E35))
-                    : null,
-              ),
+            CircleAvatar(
+              radius: 20,
+              backgroundColor: const Color(0xFFFFC4C4),
+              backgroundImage: const AssetImage("assets/images/logo.png"),
             ),
+
             const SizedBox(width: 10),
             const Text(
-              "MakanIN Anime",
+              "Anichive",
               style: TextStyle(
                   color: Color(0xFFFFC4C4),
                   fontWeight: FontWeight.bold,

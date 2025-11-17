@@ -7,9 +7,10 @@ class AnimeModel{
   final double score;
   final String synopsis;
   final int favorites;
-  final String trailerUrl;
   final List<String> genres;
   final String titleEnglish;
+  final String url;          
+
 
 // Constructur
 /* Jadi ketika kita ingin ambil nilai itu harus ada
@@ -20,9 +21,10 @@ dan ga mungkin kosong karena kita udah required */
     required this.score,
     required this.synopsis,
     required this.favorites,
-    required this.trailerUrl,
     required this.genres,
     required this.titleEnglish,
+    required this.url,      
+
 
   });
 
@@ -42,10 +44,10 @@ sebuah class AnimeModel */
       score: (json['score'] ?? 0).toDouble(), 
       synopsis: json['synopsis'] ?? 'Sinopsi Tidak Tersedia', 
        favorites: json['favorites'] ?? 0,
-      trailerUrl: json['trailer']?['url'] ?? json['trailer']?['embed_url'] ?? '',
+      // trailerUrl: json['trailer']?['url'] ?? json['trailer']?['embed_url'] ?? '',
       genres: genreList,
       titleEnglish: json['title_english'] ?? '-',
-
+      url: json['url'] ?? '', 
     );
   }
 }
